@@ -1,4 +1,4 @@
-  let scene, camera, renderer;
+ let scene, camera, renderer;
         let player, exitGate;
         let walls = [];
         let maze;
@@ -125,56 +125,50 @@
             return false; // No Collision
         }
 
-       // Check if Player Reached Exit Gate
-function checkWin() {
-    const playerBox = new THREE.Box3().setFromObject(player);
-    const gateBox = new THREE.Box3().setFromObject(exitGate);
+        // Check if Player Reached Exit Gate
+        function checkWin() {
+            const playerBox = new THREE.Box3().setFromObject(player);
+            const gateBox = new THREE.Box3().setFromObject(exitGate);
 
-    console.log('Player Position:', player.position);
-    console.log('Exit Gate Position:', exitGate.position);
-
-    const intersects = playerBox.intersectsBox(gateBox);
-    console.log('Intersects:', intersects);
-
-    return intersects;
-}
-
-// Handle Player Movement
-function handleMovement(event) {
-    const key = event.key.toLowerCase();
-    const moveDistance = 0.2;
-    let newPosition = player.position.clone();
-
-    switch (key) {
-        case 'arrowup':
-        case 'w':
-            newPosition.z -= moveDistance;
-            break;
-        case 'arrowdown':
-        case 's':
-            newPosition.z += moveDistance;
-            break;
-        case 'arrowleft':
-        case 'a':
-            newPosition.x -= moveDistance;
-            break;
-        case 'arrowright':
-        case 'd':
-            newPosition.x += moveDistance;
-            break;
-        default:
-            return; // Ignore other keys
-    }
-
-    if (!checkCollision(newPosition)) {
-        player.position.copy(newPosition);
-        // Check for Win Condition
-        if (checkWin()) {
-            console.log('Player has reached the exit!');
-            showWinPopup();
+            const intersects = playerBox.intersectsBox(gateBox);
+            return intersects;
         }
-    }
-}
+
+        // Handle Player Movement
+        function handleMovement(event) {
+            const key = event.key.toLowerCase();
+            const moveDistance = 0.2;
+            let newPosition = player.position.clone();
+
+            switch (key) {
+                case 'arrowup':
+                case 'w':
+                    newPosition.z -= moveDistance;
+                    break;
+                case 'arrowdown':
+                case 's':
+                    newPosition.z += moveDistance;
+                    break;
+                case 'arrowleft':
+                case 'a':
+                    newPosition.x -= moveDistance;
+                    break;
+                case 'arrowright':
+                case 'd':
+                    newPosition.x += moveDistance;
+                    break;
+                default:
+                    return; // Ignore other keys
+            }
+
+            if (!checkCollision(newPosition)) {
+                player.position.copy(newPosition);
+                // Check for Win Condition
+                if (checkWin()) {
+                    showWinPopup();
+                }
+            }
+        }
 
         // Show Win Popup
         function showWinPopup() {
@@ -214,39 +208,27 @@ function handleMovement(event) {
         // Start the Game (Hide Overlay and Initialize)
         function startGame() {
             const overlay = document.getElementById('overlay');
-            const startButton = document.getElementById('startButton');
-
-            // Hide Overlay
             overlay.classList.add('hidden');
-
-            // Remove Start Button Click Listener to Prevent Multiple Initializations
-            startButton.removeEventListener('click', startGame);
-
-            // Initialize the Game
             init();
         }
+
+        // Listen for Keypresses for Player Movement
+        window.addEventListener('keydown', handleMovement);
+
+        // Listen for Start Button Click
+        document.getElementById('startButton').addEventListener('click', startGame);
+
+        // Resize Handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
         // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
-
-            // Update Camera Position to Follow Player
             camera.position.copy(player.position).add(cameraOffset);
             camera.lookAt(player.position);
-
             renderer.render(scene, camera);
         }
-
-        // Event Listeners
-        document.addEventListener('keydown', handleMovement);
-        document.getElementById('startButton').addEventListener('click', startGame);
-
-        // Initial Setup on Page Load
-        window.onload = function() {
-            const overlay = document.getElementById('overlay');
-            const startButton = document.getElementById('startButton');
-
-            // Show Overlay with "Find the Exit!" Message and "Start Game" Button
-            overlay.classList.remove('hidden');
-            startButton.style.display = 'block';
-        };
