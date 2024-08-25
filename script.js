@@ -1,4 +1,4 @@
-    let scene, camera, renderer;
+     let scene, camera, renderer;
     let player, exitGate;
     let walls = [];
     let maze;
@@ -97,7 +97,7 @@
         return false; // No collision
     }
 
-     // Check if Player Reached Exit
+    // Check if Player Reached Exit
     function checkWin() {
         const playerBox = new THREE.Box3().setFromObject(player);
         const gateBox = new THREE.Box3().setFromObject(exitGate);
@@ -180,5 +180,4 @@
     window.onload = function() {
         document.getElementById('restartButton').classList.add('hidden');
         document.getElementById('overlay').classList.remove('hidden');
-    }
-    
+    };
