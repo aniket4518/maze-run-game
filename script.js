@@ -2,7 +2,7 @@
         let player, exitGate;
         let walls = [];
         let maze;
-        const cameraOffset = new THREE.Vector3(0, 5, -10);
+        const cameraOffset = new THREE.Vector3(0, 5, 0);
 
         // Initialize the game scene
         function init() {
