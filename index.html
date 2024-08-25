@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
+        /* Overlay Styles */
         #overlay {
             position: absolute;
             top: 0;
@@ -21,34 +22,39 @@
             font-size: 2em;
             z-index: 2;
             flex-direction: column;
-        }
-        #startButton, #restartButton {
-            padding: 10px 20px;
-            font-size: 1em;
-            margin-top: 20px;
-            cursor:pointer;
-            background-color: antiquewhite;
-            border-radius: 20px;
-        }
-        #startButton:hover{
-            color: aqua;
+            text-align: center;
         }
         #overlay.hidden {
             display: none;
         }
+        /* Button Styles */
+        #startButton, #restartButton {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        #startButton {
+            background-color: #28a745; /* Green */
+            color: white;
+        }
+        #restartButton {
+            background-color: #dc3545; /* Red */
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <!-- Overlay for instructions and win message -->
+    <!-- Overlay for messages and buttons -->
     <div id="overlay">
         <div id="message">Find the Exit!</div>
         <button id="startButton">Start Game</button>
-        <button id="restartButton" class="hidden" >Restart Game</button>
     </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="script.js" > </script>
-   
-
-</body>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+    </body>
 </html>
