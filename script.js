@@ -2,7 +2,7 @@
         let player, exitGate;
         let walls = [];
         let maze;
-        const cameraOffset = new THREE.Vector3(0, 5, -10);
+        const cameraOffset = new THREE.Vector3(0, 5,1);
 
         // Initialize the game scene
         function init() {
@@ -228,3 +228,16 @@
 
             renderer.render(scene, camera);
         }
+ // Event Listeners
+        document.addEventListener('keydown', handleMovement);
+        document.getElementById('startButton').addEventListener('click', startGame);
+
+        // Initial Setup on Page Load
+        window.onload = function() {
+            const overlay = document.getElementById('overlay');
+            const startButton = document.getElementById('startButton');
+
+            // Show Overlay with "Find the Exit!" Message and "Start Game" Button
+            overlay.classList.remove('hidden');
+            startButton.style.display = 'block';
+        };
